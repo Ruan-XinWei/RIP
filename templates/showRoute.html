@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% from 'macros.html' import form_field %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/showRoute.css') }}">
+{% endblock %}
+{% block sidebar_i %}0{% endblock %}
+{% block sidebar_j %}1{% endblock %}
+{% block main %}
+    <h1 class="page-header">获取路由信息</h1>
+    <form method="post">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            {{ form.route.label }}
+            {{ form.route(class="form-control") }}
+        </div>
+        <div class="checkbox all_routes">
+            <label>
+                {{ form.all }}
+                {{ form.all.label.text }}
+            </label>
+        </div>
+        {{ form.submit(class='btn btn-primary') }}
+    </form>
+    <br>
+    <h3 class="page-header">基本信息</h3>
+    <div class="pre-scrollable">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>本路由器</th>
+                    <th>下一跳路由器（*表示直连）</th>
+                    <th>目的网络</th>
+                    <th>距离</th>
+                </tr>
+                </thead>
+                <tbody class="data">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {#    <form action="{{ url_for('write') }}", method="post">#}
+    {#        <input type="submit">#}
+    {#    </form>#}
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        function select_all() {
+            const route = document.getElementById('route');
+            all = document.getElementById('all')
+            route.disabled = all.checked
+            console.log('Success')
+        }
+
+        function load_json() {
+            $.ajax({
+                url: '/static/data/routes.json',
+                dataType: 'json',
+                cache: false,
+                async: true
+            }).done(function (data) {
+                console.log(data)
+                console.log(document.getElementById('all').checked)
+                if (document.getElementById('all').checked) {
+                    let table_data = ''
+                    for (let route in data) {
+                        {#console.log(data[route][0]['目的网络'])#}
+                        for (let one in data[route]) {
+                            {#console.log(data[route][one])#}
+                            {#console.log(name)#}
+                            table_data += '<tr><td>' + route + '</td><td>' +
+                                data[route][one]['下一跳路由器'] + '</td><td>' +
+                                data[route][one]['目的网络'] + '</td><td>' +
+                                data[route][one]['距离'] + '</td></tr>'
+                            {#console.log(table_data)#}
+                        }
+                    }
+                    document.getElementsByClassName('data')[0].innerHTML = table_data
+                } else {
+                    let table_data = ''
+                    route = document.getElementById('route').value
+                    for (let v in data[route]) {
+                        table_data += '<tr><td>' + route + '</td><td>' +
+                            data[route][v]['下一跳路由器'] + '</td><td>' +
+                            data[route][v]['目的网络'] + '</td><td>' +
+                            data[route][v]['距离'] + '</td></tr>'
+                    }
+                    document.getElementsByClassName('data')[0].innerHTML = table_data
+                }
+            })
+        }
+
+        //        setInterval(function () {
+        //            load_json()
+        //            console.log('Success')
+        //        }, 200)
+        load_json()
+    </script>
+{% endblock %}

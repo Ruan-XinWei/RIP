@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://v3.bootcss.com/favicon.ico">
+
+    <title>内部网关协议RIP的模拟程序</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./static/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="./static/bootstrap/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./static/bootstrap/dashboard.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]>
+    <![endif]-->
+    <script src="./static/bootstrap/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    {% block base_style %}
+        <style>
+            .btn-primary.focus, .btn-primary:focus {
+                background-color: #337ab7;
+                outline: none;
+            }
+
+            .btn-default.focus, .btn-default:focus {
+                background-color: #ffffff;
+                outline: none;
+            }
+        </style>
+        <link rel="stylesheet" href="{{ url_for('static', filename='font/fa/css/all.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='font/iconfont/iconfont.css') }}">
+    {% endblock %}
+    {% block style %}
+    {% endblock %}
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('main') }}">内部网关协议RIP的模拟程序</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url_for('main') }}">预览</a></li>
+                <li><a href="{{ url_for('showRoute') }}">获取路由信息</a></li>
+                <li><a href="{{ url_for('change') }}">更改网络拓扑结构</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="{{ url_for('main') }}">预览 <span class="sr-only">(current)</span></a></li>
+                <li><a href="{{ url_for('showRoute') }}">获取路由信息</a></li>
+                <li><a href="{{ url_for('change') }}">更改网络拓扑结构</a></li>
+            </ul>
+        </div>
+        <script type="text/javascript">
+            sidebar = document.getElementsByClassName('nav-sidebar')
+            sidebar[{% block sidebar_i %}0{% endblock %}].getElementsByTagName('li')[{% block sidebar_j %}
+                0{% endblock %}].setAttribute('class', 'active')
+        </script>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            {% block main %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+{% block js_bootstarp %}
+    <!-- Bootstrap core JavaScript
+      ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./static/bootstrap/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="./static/bootstrap/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="./static/bootstrap/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./static/bootstrap/ie10-viewport-bug-workaround.js"></script>
+{% endblock %}
+{% block js_echars %}
+    <script type="text/javascript" src="./static/js/echarts.min.js"></script>
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+</body>
+</html>

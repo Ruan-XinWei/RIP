@@ -1,0 +1,16 @@
+{
+  "id": "2012102",
+  "name": "jd",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "584025",
+      "name": "定位",
+      "font_class": "dingwei",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block main %}
+    <h1 class="page-header">预览</h1>
+    <div id="graphChart" class="col-md-6"></div>
+    <div class="col-md-6">
+        <h3 class="page-header">基本信息</h3>
+        <div class="pre-scrollable">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>名称</th>
+                        <th>地址</th>
+                        <th>类别</th>
+                    </tr>
+                    </thead>
+                    <tbody class="data">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        const graphChart = echarts.init(document.getElementById("graphChart"))
+        const graphChartOption = {
+            title: {
+                text: '网络拓扑图',
+                subtext: 'Default layout',
+                top: 'bottom',
+                left: 'right'
+            },
+            series: [{
+                type: 'graph',
+                layout: 'force',
+                animation: false,
+                categories: 2,
+                force: {
+                    initLayout: 'circular',
+                    repulsion: 50,
+                    gravity: 0,
+                    edgeLength: 100
+                }
+            }],
+            tooltip: {
+                // triggerOn: 'click'
+            }
+        };
+        graphChart.setOption(graphChartOption)
+
+        $.ajax({
+            url: "/static/data/data.json",
+            dataType: 'json',
+            cache: false
+        }).done(function (data) {
+            data.data.forEach(function (node) {
+                node.symbolSize = 20
+            })
+
+            console.log(data)
+            graphChart.setOption({
+                series: [{
+                    roam: true,
+                    data: data.data,
+                    edges: data.edges,
+                    categories: data.categories,
+                    label: {
+                        position: 'right'
+                    }
+                }],
+                legend: [{
+                    // selectedMode: 'single',
+                    data: data.categories.map(function (a) {
+                        return a.name;
+                    })
+                }],
+            })
+        })
+
+    </script>
+
+    <script type="text/javascript">
+        {#$.getJSON('./static/data/data.json', function (data) {#}
+        {#    console.log(data.data)#}
+        {#    data_element = document.getElementsByClassName('data')[0]#}
+        {#    data_element.innerHTML = ''#}
+        {#    for (let i = 0; i < data.data.length; ++i) {#}
+        {#        category = '路由器'#}
+        {#        if (data.data[i].category == 1) {#}
+        {#            category = '网络'#}
+        {#        }#}
+        {#        data_element.innerHTML += '<tr>'#}
+        {#            + '<td>' + data.data[i].id + '</td>'#}
+        {#            + '<td>' + data.data[i].name + '</td>'#}
+        {#            + '<td>' + data.data[i].value + '</td>'#}
+        {#            + '<td>' + category + '</td>'#}
+        {#            + '</tr>'#}
+        {#    }#}
+//        })
+        $.ajax({
+            url: '/static/data/data.json',
+            dataType: 'json',
+            cache: false
+        }).done(function (data) {
+            data_element = document.getElementsByClassName('data')[0]
+            data_element.innerHTML = ''
+            for (let i = 0; i < data.data.length; ++i) {
+                category = '路由器'
+                if (data.data[i].category == 1) {
+                    category = '网络'
+                }
+                data_element.innerHTML += '<tr>'
+                    + '<td>' + data.data[i].id + '</td>'
+                    + '<td>' + data.data[i].name + '</td>'
+                    + '<td>' + data.data[i].value + '</td>'
+                    + '<td>' + category + '</td>'
+                    + '</tr>'
+            }
+        })
+    </script>
+{% endblock %}

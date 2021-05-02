@@ -1,0 +1,325 @@
+{% extends 'base.html' %}
+
+{% block sidebar_i %}0{% endblock %}
+{% block sidebar_j %}2{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/change.css') }}">
+{% endblock %}
+{% block main %}
+    <h1 class="page-header">更改网络拓扑结构</h1>
+    <div class="col-md-6">
+        <h3 class="page-header">基本操作</h3>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                           aria-expanded="true" aria-controls="collapseOne">
+                            设置路由器故障
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <form method="post">
+                            {{ route_exit_form.csrf_token }}
+                            <div>
+                                {{ route_exit_form.route_list(class='form-control') }}
+                            </div>
+                            <br>
+                            {{ route_exit_form.route_exit_submit(class='btn btn-primary') }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading1">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse1"
+                           aria-expanded="true" aria-controls="collapse1">
+                            路由器恢复
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="heading1">
+                    <div class="panel-body">
+                        <form method="post">
+                            {{ route_recover_form.csrf_token }}
+                            <div>
+                                {{ route_recover_form.route_list(class='form-control') }}
+                            </div>
+                            <br>
+                            {{ route_recover_form.route_recover_submit(class='btn btn-primary') }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            设置网络退出
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        <form method="post">
+                            {{ net_exit_form.csrf_token }}
+                            <div>
+                                {{ net_exit_form.net_list(class='form-control') }}
+                            </div>
+                            <br>
+                            {{ net_exit_form.net_exit_submit(class='btn btn-primary') }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading3">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                            网络恢复
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="headingThree">
+                    <div class="panel-body">
+                        <form method="post">
+                            {{ net_recover_form.csrf_token }}
+                            <div>
+                                {{ net_recover_form.net_list(class='form-control') }}
+                            </div>
+                            <br>
+                            {{ net_recover_form.net_recover_submit(class='btn btn-primary') }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading4">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                            网络加入
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse4" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="heading4">
+                    <div class="panel-body">
+                        <form method="post">
+                            {{ net_add_form.csrf_token }}
+                            <div class="form-group">
+                                {{ net_add_form.net_name.label }}
+                                {{ net_add_form.net_name(class="form-control") }}
+                            </div>
+                            <div class="form-group">
+                                {{ net_add_form.net_address.label }}
+                                {{ net_add_form.net_address(class="form-control") }}
+                            </div>
+                            <a class="btn btn-default" href="#" role="button" onclick="function add_net() {
+                              net_name = document.getElementById('net_name')
+                              net_address = document.getElementById('net_address')
+                              net_name.value = '网络' + (Math.round(Math.random() * 800) + 100)
+                              address = ''
+                              for (let i = 0; i < 4; ++i) {
+                                  if (i < 3){
+                                      address += Math.round(Math.random()*244) + '.'
+                                  }
+                                  else {
+                                      address += Math.round(Math.random()*244)
+                                  }
+                              }
+                              net_address.value = address
+                            } add_net()">随机生成一个网络</a>
+                            {{ net_add_form.net_add_submit(class="btn btn-primary") }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading5">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                            添加线路
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse5" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="heading5">
+                    <div class="panel-body">
+                        <form method="post">
+                            {{ add_link_form.csrf_token }}
+                            <div class="form-group">
+                                {{ add_link_form.route.label }}
+                                {{ add_link_form.route(class="form-control") }}
+                            </div>
+                            <div class="form-group">
+                                {{ add_link_form.net.label }}
+                                {{ add_link_form.net(class="form-control") }}
+                            </div>
+                            {{ add_link_form.add_link_submit(class='btn btn-primary') }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading6">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                            删除线路
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse6" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="heading6">
+                    <div class="panel-body">
+                        <form method="post">
+                            {{ remove_link_form.csrf_token }}
+                            <div class="form-group">
+                                {{ remove_link_form.route.label }}
+                                {{ remove_link_form.route(class="form-control") }}
+                            </div>
+                            <div class="form-group">
+                                {{ remove_link_form.net.label }}
+                                {{ remove_link_form.net(class="form-control") }}
+                            </div>
+                            {{ remove_link_form.remove_link_submit(class='btn btn-primary') }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading7">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapse7" aria-expanded="false" aria-controls="collapse7">
+                            设置
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse7" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="heading7">
+                    <div class="panel-body">
+                        <form method="post">
+                            {{ set_form.csrf_token }}
+                            {{ set_form.state.label }}
+                            {{ set_form.state(class="form-control",placeholder= state ,disabled='disabled') }}
+                            <br>
+                            {% if state == '正在运行...' %}
+                                {{ set_form.start(class="btn btn-primary", disabled='disabled') }}
+                                {{ set_form.end(class="btn btn-primary") }}
+                            {% elif state == '暂停中...' %}
+                                {{ set_form.start(class="btn btn-primary") }}
+                                {{ set_form.end(class="btn btn-primary",disabled='disabled') }}
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3 class="page-header">状态信息</h3>
+        <div class="pre-scrollable">
+            <table class="table table-striped table-inverse table-responsive">
+                <thead class="thead-inverse">
+                <tr>
+                    <th>时间</th>
+                    <th>操作信息</th>
+                </tr>
+                </thead>
+                <tbody id="log">
+                {#                <tr class="success">#}
+                {#                    <td scope="row">time</td>#}
+                {#                    <td>操作</td>#}
+                {#                </tr>#}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    <div class="col-md-6">
+        <h3 class="page-header">所有路由信息
+            <button class="btn btn-primary pull-right" onclick="load_json()">刷新</button>
+        </h3>
+        <div class="pre-scrollable">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>本路由器</th>
+                        <th>下一跳（*表示直连）</th>
+                        <th>目的网络</th>
+                        <th>距离</th>
+                    </tr>
+                    </thead>
+                    <tbody class="data">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        function load_json() {
+            $.ajax({
+                url: '/static/data/routes.json',
+                dataType: 'json',
+                cache: false,
+                async: true
+            }).done(function (data) {
+                let table_data = ''
+                for (let route in data) {
+                    {#console.log(data[route][0]['目的网络'])#}
+                    for (let one in data[route]) {
+                        {#console.log(data[route][one])#}
+                        {#console.log(name)#}
+                        table_data += '<tr><td>' + route + '</td><td>' +
+                            data[route][one]['下一跳路由器'] + '</td><td>' +
+                            data[route][one]['目的网络'] + '</td><td>' +
+                            data[route][one]['距离'] + '</td></tr>'
+                        {#console.log(table_data)#}
+                    }
+                }
+                document.getElementsByClassName('data')[0].innerHTML = table_data
+            })
+        }
+
+        function add_log() {
+            $.ajax({
+                url: '/static/data/log.json',
+                dataType: 'json',
+                cache: false
+            }).done(function (data) {
+                let table_data = ''
+                for (let d = data.length - 1; d >= 0; --d) {
+                    table_data += '<tr class="' + data[d]['grade'] +
+                        '"><td>' + data[d]['time'] + '</td>' +
+                        '<td>' + data[d]['info'] + '</td>' +
+                        '</tr>'
+                }
+                console.log(table_data)
+                document.getElementById('log').innerHTML = table_data
+            })
+        }
+
+        load_json()
+        setInterval(function () {
+            add_log()
+            let all = document.getElementsByClassName('pre-scrollable');
+            one = all[all.length - 1]
+            one.setAttribute('style', 'max-height:' + document.getElementsByClassName('col-md-6')[0].offsetHeight + 'px;')
+        }, 200)
+    </script>
+{% endblock %}

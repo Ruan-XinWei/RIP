@@ -1,0 +1,139 @@
+{
+  "data": [
+    {
+      "id": 0,
+      "name": "路由器A",
+      "symbolSize": 20,
+      "value": "140.5.12.64",
+      "category": 0
+    },
+    {
+      "id": 1,
+      "name": "网络1",
+      "value": "130.5.8.0",
+      "category": 1
+    },
+    {
+      "id": 2,
+      "name": "网络2",
+      "value": "112.32.4.2",
+      "category": 1
+    },
+    {
+      "id": 3,
+      "name": "网络3",
+      "value": "123.23.67.3",
+      "category": 1
+    },
+    {
+      "id": 4,
+      "name": "路由器E",
+      "value": "129.123.7.3",
+      "category": 0
+    },
+    {
+      "id": 5,
+      "name": "路由器D",
+      "value": "190.23.67.3",
+      "category": 0
+    },
+    {
+      "id": 6,
+      "name": "路由器B",
+      "value": "113.32.27.3",
+      "category": 0
+    },
+    {
+      "id": 7,
+      "name": "网络6",
+      "value": "192.132.5.2",
+      "category": 1
+    },
+    {
+      "id": 8,
+      "name": "路由器C",
+      "value": "53.223.67.31",
+      "category": 0
+    },
+    {
+      "id": 9,
+      "name": "网络5",
+      "value": "10.36.67.13",
+      "category": 1
+    },
+    {
+      "id": 10,
+      "name": "路由器F",
+      "value": "180.3.2.55",
+      "category": 0
+    },
+    {
+      "id": 11,
+      "name": "网络4",
+      "value": "18.3.12.55",
+      "category": 1
+    }
+  ],
+  "edges": [
+    {
+      "source": 0,
+      "target": 1
+    },
+    {
+      "source": 0,
+      "target": 2
+    },
+    {
+      "source": 0,
+      "target": 3
+    },
+    {
+      "source": 4,
+      "target": 1
+    },
+    {
+      "source": 5,
+      "target": 2
+    },
+    {
+      "source": 6,
+      "target": 3
+    },
+    {
+      "source": 4,
+      "target": 7
+    },
+    {
+      "source": 5,
+      "target": 7
+    },
+    {
+      "source": 6,
+      "target": 11
+    },
+    {
+      "source": 8,
+      "target": 9
+    },
+    {
+      "source": 10,
+      "target": 7
+    },
+    {
+      "source": 10,
+      "target": 9
+    },
+    {
+      "source": 8,
+      "target": 11
+    }
+  ],
+  "categories": [
+    {
+      "name": "路由器"
+    },
+    {
+      "name": "网络"
+    }
+  ]
+}
